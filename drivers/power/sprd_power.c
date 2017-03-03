@@ -246,7 +246,10 @@ static ssize_t sprd_set_caliberate(struct device *dev,
 
 	switch (off) {
 	case STOP_CHARGE:
-		battery_data->usb_online = 0;
+		//battery_data->usb_online = 0;
+		//-- [[ for autotest 2013-03-26
+		battery_data->usb_online = set_value ? 0 : 1;
+		//-- ]]
 		battery_data->ac_online = 0;
 		break;
 	case BATTERY_0:

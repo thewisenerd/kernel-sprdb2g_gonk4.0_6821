@@ -134,4 +134,7 @@ source "drivers/clocksource/Kconfig"
 
 source "drivers/sipc/Kconfig"
 
+source "drivers/autotst/Kconfig"
+
+
 endmenu

@@ -122,6 +122,9 @@ static void sprd_lcd_led_lateresume(struct early_suspend *h)
 	mutex_lock(&led->mutex);
 	led->suspend = 0;
 	mutex_unlock(&led->mutex);
+        // add jinq:  delayms  modify for all lcd 
+         mdelay(20);  //20ms
+        //add jinq end 
 	led_work(&led->work);
 }
 #endif

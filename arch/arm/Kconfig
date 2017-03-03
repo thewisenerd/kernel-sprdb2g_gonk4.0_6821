@@ -2218,6 +2218,18 @@ config ARCH_SUSPEND_POSSIBLE
 
 endmenu
 
+menu "Freecom Configuration"
+# jinq add
+config LCD_DATA_WIDTH_8BIT
+	bool "Some 8 Bit bus_width LCD need special control"
+	default n
+	---help---
+	  This option enables the support for the 8 Bit bus_width LCD
+	  General Configuration
+
+
+endmenu
+
 source "net/Kconfig"
 
 source "drivers/Kconfig"

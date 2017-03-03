@@ -250,7 +250,8 @@ static void lcdc_hw_init(void)
 	reg_val = (1<<0);
 
 	/* FMARK mode */
-	#if CONFIG_FB_LCD_NOFMARK
+/////默认关闭帧同步。不然工厂没有屏的话 ，校准参数不能保存，
+	#if 0//CONFIG_FB_LCD_NOFMARK
 	reg_val |= (1<<1);
 	#endif
 

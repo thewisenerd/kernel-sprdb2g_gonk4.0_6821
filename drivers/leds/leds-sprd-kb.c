@@ -174,7 +174,7 @@ static int sprd_kb_led_probe(struct platform_device *dev)
 	led->cdev.brightness_set = sprd_led_set;
 	//led->cdev.default_trigger = "heartbeat";
 	led->cdev.default_trigger = "none";
-	led->cdev.name = "keyboard-backlight";
+	led->cdev.name = "button-backlight";
 	led->cdev.brightness_get = NULL;
 	led->cdev.flags |= LED_CORE_SUSPENDRESUME;
 	led->enabled = 0;

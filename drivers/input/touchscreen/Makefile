@@ -73,3 +73,4 @@ obj-$(CONFIG_TOUCHSCREEN_MMS134S_TS) += mms134s_ts.o MMS100S_ISC_Updater_Customi
 obj-$(CONFIG_TOUCHSCREEN_SILABS_F760) += silabs_f760.o bl_master.o
 obj-$(CONFIG_TOUCHSCREEN_IST30XX) += ist30xx.o ist30xx_misc.o ist30xx_sys.o ist30xx_update.o ist30xx_sec_test.o
 obj-$(CONFIG_TOUCHSCREEN_MSG2136) += mstar2133_i2c_ts.o
+obj-$(CONFIG_TOUCHSCREEN_FT5306) += ft5306_ts.o

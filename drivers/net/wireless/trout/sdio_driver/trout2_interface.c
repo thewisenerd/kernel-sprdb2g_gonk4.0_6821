@@ -1324,34 +1324,52 @@ static void trout_reset(void)
     mdelay(1);
 }
 
+//modified by harry feng for freecom 7635-MB-V0.1
 //enable 32KHz time clock.
-#if 1
+#define GREG_BASE		SPRD_GREG_BASE
+#define GR_PLL_SCR_TR		(GREG_BASE + 0x0070)
+#define GR_PCTL_TR			(GREG_BASE + 0x000C)
+#define GR_GEN1_TR			(GREG_BASE + 0x0018)
+#if 1 
 /*leon liu modified trout_rtc_on/off for sc7710*/
 static  void  trout_rtc_on(void)
 {
-		struct clk *wlan_clk;
 
-		wlan_clk	=	clk_get(NULL, "clk_aux0");
-		if (IS_ERR(wlan_clk)){
-				printk("clock: fail to get clk_aux0\n");
-		}
-		clk_set_rate(wlan_clk, 32000);
-		clk_enable(wlan_clk);
-		clk_put(wlan_clk);
+	struct clk *wlan_clk;
+    struct clk *clk_parent;
+
+	wlan_clk	=	clk_get(NULL, "clk_aux1");
+	if (IS_ERR(wlan_clk)){
+				printk("clock: fail to get clk_aux1\n");
+	}
+	clk_parent = clk_get(NULL, "ext_32k");
+    if (IS_ERR(clk_parent)) {
+        printk("failed to get parent ext_32k\n");
+    }
+
+    clk_set_parent(wlan_clk, clk_parent);
+	clk_set_rate(wlan_clk, 32000);
+	clk_enable(wlan_clk);
+	clk_put(wlan_clk);
+
 
 }
 
 static  void  trout_rtc_off(void)
 {
+#if 0
 		struct clk *wlan_clk;
 
-		wlan_clk	=	clk_get(NULL, "clk_aux0");
+		wlan_clk	=	clk_get(NULL, "clk_aux1");
 		if (IS_ERR(wlan_clk)){
-				printk("clock: fail to get clk_aux0\n");
+				printk("clock: fail to get clk_aux1\n");
 		}
 		clk_disable(wlan_clk);
 		clk_put(wlan_clk);
+#endif
 }
+
+//modified by harry feng for freecom 7635-MB-V0.1 end
 
 #else /*!CONFIG_ARCH_SC7710*/
 static  void  trout_rtc_on(void)

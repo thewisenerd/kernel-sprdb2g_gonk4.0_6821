@@ -23,6 +23,32 @@ config FB_LCD_ILI9486
 	boolean "support ILI9486 panel"
 	depends on FB_SC8810
 
+config FB_LCD_ILI9481
+	boolean "support ILI9481 panel"
+	depends on FB_SC8810
+
+	
+config FB_LCD_NT35310
+	boolean "support NT35310
+	depends on FB_SC8810
+	
+		
+config FB_LCD_HX8357D
+	boolean "support HX8357D
+	depends on FB_SC8810
+	
+config FB_LCD_ST7796S
+	boolean "support ST7796S
+	depends on FB_SC8810
+	
+config FB_LCD_ILI9488
+	boolean "support ILI9488
+	depends on FB_SC8810
+	
+config FB_LCD_R61581B
+	boolean "support R61581B
+	depends on FB_SC8810
+
 
 config FB_LCD_ILI9341_BOE
         boolean "support ILI9486 panel"

@@ -2076,19 +2076,31 @@ uint32_t Sensor_SetFlash(uint32_t flash_mode)
 	case 1:		/*flash on */
 	case 2:		/*for torch */
 		/*low light */
+			gpio_request(79,"gpio79");
+			gpio_direction_output(79,1);
+			gpio_set_value(79,1);
+			gpio_request(144,"gpio144");
+			gpio_direction_output(144,0);
+			gpio_set_value(144,0); 
+		#if  0
 		gpio_request(135, "gpio135");
 		gpio_direction_output(135, 1);
 		gpio_set_value(135, 1);
 		gpio_request(144, "gpio144");
 		gpio_direction_output(144, 0);
 		gpio_set_value(144, 0);
+		#endif
 		break;
 	case 0x11:
 		/*high light */
+			gpio_request(79,"gpio79");
+			gpio_direction_output(79,1);
+			gpio_set_value(79,1);
+		#if 0
 		gpio_request(135, "gpio135");
 		gpio_direction_output(135, 1);
 		gpio_set_value(135, 1);
-
+		#endif
 		gpio_request(144, "gpio144");
 		gpio_direction_output(144, 1);
 		gpio_set_value(144, 1);
@@ -2096,9 +2108,14 @@ uint32_t Sensor_SetFlash(uint32_t flash_mode)
 	case 0x10:		/*close flash */
 	case 0x0:
 		/*close the light */
+			gpio_request(79,"gpio79");
+			gpio_direction_output(79,0);
+			gpio_set_value(79,0);
+		#if 0
 		gpio_request(135, "gpio135");
 		gpio_direction_output(135, 0);
 		gpio_set_value(135, 0);
+		#endif
 		gpio_request(144, "gpio144");
 		gpio_direction_output(144, 0);
 		gpio_set_value(144, 0);

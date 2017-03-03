@@ -3,6 +3,8 @@
 ifeq ($(CONFIG_ARCH_SC8810),y)
 sprd_dcam-objs := common/sensor_drv.o common/sensor_cfg.o common/dc_cfg.o common/dc_product_cfg.o common/isp_control.o sc8810/dcam_service_sc8810.o sc8810/dcam_drv_sc8810.o sc8810/dcam_v4l2.o
 # sensor
+obj-$(CONFIG_DCAM_SENSOR_GC0329) += sensor_gc0329.o
+obj-$(CONFIG_DCAM_SENSOR_GC0311) += sensor_gc0311.o
 obj-$(CONFIG_DCAM_SENSOR_GC2035) += sensor_gc2035.o
 obj-$(CONFIG_DCAM_SENSOR_OV2640) += sensor_ov2640.o
 obj-$(CONFIG_DCAM_SENSOR_OV2659) += sensor_ov2659.o
@@ -18,6 +20,7 @@ obj-$(CONFIG_DCAM_SENSOR_OV9660) += sensor_ov9660.o
 obj-$(CONFIG_DCAM_SENSOR_GC0306) += sensor_gc0306.o
 obj-$(CONFIG_DCAM_SENSOR_GC0307) += sensor_gc0307.o
 obj-$(CONFIG_DCAM_SENSOR_GC0309) += sensor_gc0309.o
+obj-$(CONFIG_DCAM_SENSOR_AUTOTEST) += sensor_autotst.o
 obj-$(CONFIG_DCAM_SENSOR_GT2005) += sensor_gt2005.o
 obj-$(CONFIG_DCAM_SENSOR_HI253) += sensor_hi253.o
 obj-$(CONFIG_DCAM_SENSOR_HI351) += sensor_hi351.o

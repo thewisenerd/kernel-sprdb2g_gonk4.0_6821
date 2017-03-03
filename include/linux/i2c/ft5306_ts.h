@@ -1,14 +1,36 @@
 #ifndef __LINUX_FT5X0X_TS_H__
 #define __LINUX_FT5X0X_TS_H__
 
-#if defined(CONFIG_MACH_SP6825GA) || defined(CONFIG_MACH_SP6825GB)
+#if defined(CONFIG_MACH_SP6825GA) || defined(CONFIG_MACH_SP6825GB) || defined(CONFIG_MACH_SP8825GB) || defined(CONFIG_MACH_SP8825GA)
 #define SCREEN_MAX_X    479
 #define SCREEN_MAX_Y    853
-#else
-#define SCREEN_MAX_X    539
-#define SCREEN_MAX_Y    959
+#elif defined(CONFIG_LCD_QHD)
+#define SCREEN_MAX_X	539
+#define SCREEN_MAX_Y	959
+#elif defined(CONFIG_LCD_FWVGA)
+#define SCREEN_MAX_X	479
+#define SCREEN_MAX_Y	853
+#elif defined(CONFIG_LCD_WVGA)
+#define SCREEN_MAX_X	479
+#define SCREEN_MAX_Y	799
+#elif defined(CONFIG_LCD_HVGA)
+#define SCREEN_MAX_X	319
+#define SCREEN_MAX_Y	479
+#elif defined(CONFIG_LCD_QVGA)
+#define SCREEN_MAX_X	239
+#define SCREEN_MAX_Y	319
+#else //harry
+#define SCREEN_MAX_X	319
+#define SCREEN_MAX_Y	479
 #endif
 #define PRESS_MAX       255
+
+#if 0	//defined(CONFIG_MACH_SP6825EB_7663) || defined(CONFIG_MACH_SP8825EB_7663)
+//  Alex.shi 用7616洲际通4寸屏整机装机时要走这边,实际tiger项目后续还是让客户按我们标准做,故非能这里  
+#define CTP_NEGATIVE_Y	1
+#else
+#define CTP_NEGATIVE_Y	0
+#endif
 
 #define FT5X0X_NAME			"ft5x0x_ts"//"synaptics_i2c_rmi"//"synaptics-rmi-ts"// 
 #define FT5206_TS_DEVICE		"ft5x0x_ts"

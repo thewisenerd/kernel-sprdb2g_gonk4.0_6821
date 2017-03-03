@@ -1291,27 +1291,39 @@ static int vidioc_handle_ctrl(struct v4l2_control *ctrl)
 		//g_dcam_info.flash_mode: 0 - close, 1 - on, 2 - torch, 0x10 - close after start, 0x11 - high light, 0x22 - recording start
 		printk("test camera flash mode = 0x%x .\n",
 		       (uint8_t) ctrl->value);
-		if (g_dcam_info.flash_mode == (uint8_t) ctrl->value) {
-			DCAM_V4L2_PRINT
-			    ("V4L2:don't need handle flash: V4L2_CID_GAMMA !.\n");
-			break;
-		}
+
+	
 		if (FLASH_OPEN_ON_RECORDING == ctrl->value) {
 			g_dcam_info.recording_start = 1;
-#ifdef FLASH_DV_OPEN_ON_RECORD
+#if 1  //def FLASH_DV_OPEN_ON_RECORD
 			if (FLASH_TORCH == g_dcam_info.flash_mode)
 				Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_TORCH);
 #endif
 		} else {
-			g_dcam_info.flash_mode = (uint8_t) ctrl->value;
+			if (g_dcam_info.flash_mode != (uint8_t) ctrl->value){
+				g_dcam_info.flash_mode = (uint8_t) ctrl->value;
+				if (FLASH_TORCH == g_dcam_info.flash_mode) {
+					Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_TORCH);
+				}
+				else if (FLASH_CLOSE == g_dcam_info.flash_mode) {
+					Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_CLOSE);
+				}
+				break;
+			}
+			if(g_is_first_frame){
+                break;
+            }
+
 			if (FLASH_CLOSE == g_dcam_info.flash_mode) {
 				Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_CLOSE);	// disable flash
 			}
-#ifdef FLASH_DV_OPEN_ALWAYS
-			else if (FLASH_TORCH == g_dcam_info.flash_mode) {
-				Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_TORCH);
-			}
-#endif
+			else if (FLASH_OPEN == g_dcam_info.flash_mode) {
+                                Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_OPEN);  // open flash
+                        }
+			else if (FLASH_AUTO == g_dcam_info.flash_mode) {
+                                Sensor_Ioctl(SENSOR_IOCTL_FLASH, FLASH_AUTO);  // open flash
+                        }
+
 		}
 		break;
 	default:

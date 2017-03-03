@@ -24,6 +24,7 @@
 #include <linux/i2c.h>
 #include <linux/i2c/lis3dh.h>
 #include <linux/i2c/msg21xx_i2c_ts.h>
+#include <linux/i2c/ft5306_ts.h>
 #include <linux/i2c/tmd2771_pls.h>
 #include <linux/spi/spi.h>
 #include <mach/globalregs.h>
@@ -31,6 +32,10 @@
 #include <sound/audio_pa.h>
 #include "../devices.h"
 #include <mach/serial_sprd.h>
+
+#ifdef CONFIG_INPUT_MXC622X_I2C
+#include <linux/i2c/mxc622x.h>
+#endif
 
 extern void __init sc8810_reserve(void);
 extern void __init sc8810_map_io(void);
@@ -138,11 +143,40 @@ static struct msg_ts_platform_data mstar2133_ts_info = {
 	.reset_gpio_number	= GPIO_TOUCH_RESET,
 };
 
+static struct ft5x0x_ts_platform_data ft5x0x_ts_info = {
+    .irq_gpio_number    = GPIO_TOUCH_IRQ,
+    .reset_gpio_number  = GPIO_TOUCH_RESET,
+    .vdd_name           = "LDO_VDD28",
+};
+
+#ifdef CONFIG_INPUT_MXC622X_I2C
+//Alex.shi:g_position provide the sensor position setting , value is between 0~7
+static struct mxc622x_acc_platform_data mxc622x_plat_data = {
+	.poll_interval	= 20,
+	.min_interval	= 10,
+	.g_position		= 6,
+	//.vdd_name		= "vdd28",
+};
+#endif
+
+
 static struct i2c_board_info i2c2_boardinfo[] = {
+#if defined(CONFIG_TOUCHSCREEN_MSG2136)
 	{
 		I2C_BOARD_INFO("ms-msg21xx", 0x26),
 		.platform_data = &mstar2133_ts_info,
 	},
+#elif defined(CONFIG_TOUCHSCREEN_FT5306)
+    {   
+        I2C_BOARD_INFO(FT5206_TS_DEVICE, FT5206_TS_ADDR),
+        .platform_data = &ft5x0x_ts_info,
+    },  
+#endif
+	#ifdef CONFIG_INPUT_MXC622X_I2C
+	{ I2C_BOARD_INFO(MXC622X_ACC_I2C_NAME, MXC622X_ACC_I2C_ADDR),
+	  .platform_data = &mxc622x_plat_data,
+	},
+#endif
 };
 
 static struct i2c_board_info i2c1_boardinfo[] = {

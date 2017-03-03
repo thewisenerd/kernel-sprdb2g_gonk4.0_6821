@@ -340,14 +340,23 @@ static struct panel_spec *adapt_panel_from_uboot(int cs)
 {
 	struct panel_cfg *cfg;
 	struct list_head *panel_list = cs ? &panel_list1 : &panel_list0;
-
-	if (lcd_id_from_uboot == 0) {
-		return NULL;
+	uint32_t reg_val;
+	if (lcd_id_from_uboot == 0x5555){
+		// jinq: return first lcd driver
+		#if 1//CONFIG_FB_LCD_NOFMARK  close TE ,or calibration fail
+		 reg_val |= (1<<1);
+		lcdc_write(reg_val, LCDC_CTRL);
+	       #endif
+		return cfg->panel;
+		//return NULL;
 	}
 
 	list_for_each_entry(cfg, panel_list, list) {
 		if(lcd_id_from_uboot == cfg->lcd_id) {
 			printk(KERN_INFO "LCD Panel 0x%x is attached!\n", cfg->lcd_id);
+			// add  jinq for open TE,or linear apodising screen
+			//reg_val &=!(1<<1);
+			//lcdc_write(reg_val, LCDC_CTRL);
 			return cfg->panel;
 		}
 	}

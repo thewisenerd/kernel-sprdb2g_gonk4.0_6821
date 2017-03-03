@@ -114,9 +114,9 @@ static void wlan_clk_init(void)
 	struct clk *wlan_clk;
 	struct clk *clk_parent;
 
-	wlan_clk = clk_get(NULL, "clk_aux0");
+	wlan_clk = clk_get(NULL, "clk_aux1");
 	if (IS_ERR(wlan_clk)) {
-		pr_info("clock: failed to get clk_aux0\n");
+		pr_info("clock: failed to get clk_aux1\n");
 	}
 	clk_parent = clk_get(NULL, "ext_32k");
 	if (IS_ERR(clk_parent)) {
